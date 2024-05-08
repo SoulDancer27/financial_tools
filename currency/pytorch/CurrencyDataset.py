@@ -15,10 +15,11 @@ class CurrencyDataset(Dataset):
         self.total_length = len(data) - seq_length
 
     def __len__(self):
-        return len(self.data)
+        return self.total_length
 
     def __getitem__(self, index):
         if index < self.total_length:
             sequence = self.data.iloc[index: index + self.seq_length].values
             target = self.data.iloc[index + self.seq_length].values
-            return {'data': torch.tensor(sequence), 'target': torch.tensor(target, dtype=torch.float32)}
+            return {'data': torch.tensor(sequence, dtype=torch.float32),
+                     'target': torch.tensor(target, dtype=torch.float32)}
